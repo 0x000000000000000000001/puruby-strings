@@ -1,0 +1,25 @@
+package:
+  name: puruby-strings
+  dependencies:
+    - arrays
+    - control
+    - either
+    - enums
+    - foldable-traversable
+    - gen
+    - integers
+    - maybe
+    - newtype
+    - nonempty
+    - partial
+    - prelude
+    - tailrec
+    - tuples
+    - unfoldable
+    - unsafe-coerce
+    - assert
+    - console
+    - minibench
+workspace:
+  packageSet:
+    registry: 77.10.1

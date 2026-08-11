@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -e
+cd "$(dirname "$0")/.."
+
+CLEAN=0
+for arg in "$@"; do
+  if [ "$arg" == "-c" ] || [ "$arg" == "--clean" ]; then
+    CLEAN=1
+  fi
+done
+
+if [ "$CLEAN" == "1" ]; then
+  COMPILER_DIR="../puruby"
+  echo "=== Recompiling ${COMPILER_DIR} ==="
+  (cd "${COMPILER_DIR}" && spago build) || { echo "Compiler build failed"; exit 1; }
+fi
+
+# Remove cache for safety
+rm -rf output
+
+# If spago.rb.yaml or spago.ruby.yaml exists, use it
+if [ -f "spago.ruby.yaml" ]; then
+  rm -f spago.yaml
+  ln -s spago.ruby.yaml spago.yaml
+elif [ -f "spago.rb.yaml" ]; then
+  rm -f spago.yaml
+  ln -s spago.rb.yaml spago.yaml
+fi
+
+echo "=== Building project with spago ==="
+spago build || { echo "Spago build failed"; exit 1; }
+
+echo "=== Generating Ruby code with puruby ==="
+node -e "import('../puruby/output/Main/index.js').then(m => m.main())" -- --main Test.Main || exit 1
+
+echo "=== Running Ruby test script ==="
+cd output
+if [ -f "main_run.rb" ]; then
+    ruby main_run.rb
+else
+    echo "No output/main_run.rb found."
+    exit 1
+fi
+echo -e "\n✅ Tests passed successfully!"
