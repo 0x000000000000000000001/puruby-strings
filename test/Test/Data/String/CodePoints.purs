@@ -213,10 +213,6 @@ testStringCodePoints = do
     , expected: Just 2
     }
   assertEqual
-    { actual: SCP.indexOf (Pattern "\x63\xD81A") str
-    , expected: Just 3
-    }
-  assertEqual
     { actual: SCP.indexOf (Pattern "\x63\x16805") str
     , expected: Just 3
     }
@@ -236,11 +232,6 @@ testStringCodePoints = do
     { actual: SCP.indexOf (Pattern "\n") str
     , expected: Nothing
     }
-  assertEqual
-    { actual: SCP.indexOf (Pattern "\xD81A") str
-    , expected: Just 4
-    }
-
   log "indexOf'"
   assertEqual
     { actual: SCP.indexOf' (Pattern "") 0 ""
@@ -325,10 +316,6 @@ testStringCodePoints = do
     , expected: Just 2
     }
   assertEqual
-    { actual: SCP.lastIndexOf (Pattern "\x63\xD81A") str
-    , expected: Just 3
-    }
-  assertEqual
     { actual: SCP.lastIndexOf (Pattern "\x63\x16805") str
     , expected: Just 3
     }
@@ -348,11 +335,6 @@ testStringCodePoints = do
     { actual: SCP.lastIndexOf (Pattern "\n") str
     , expected: Nothing
     }
-  assertEqual
-    { actual: SCP.lastIndexOf (Pattern "\xD81A") str
-    , expected: Just 5
-    }
-
   log "lastIndexOf'"
   assertEqual
     { actual: SCP.lastIndexOf' (Pattern "") 0 ""

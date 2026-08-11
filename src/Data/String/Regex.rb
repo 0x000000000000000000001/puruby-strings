@@ -4,7 +4,7 @@ $Data_String_Regex_regexImpl = ->(left) { ->(right) { ->(s1) { ->(s2) {
   begin
     opts = 0
     opts |= Regexp::IGNORECASE if s2.include?("i")
-    opts |= Regexp::MULTILINE if s2.include?("m")
+    opts |= Regexp::MULTILINE if s2.include?("s")
     
     right.call({ "regexp" => Regexp.new(s1, opts), "flags" => s2, "source" => s1, "lastIndex" => 0 })
   rescue => e
@@ -79,5 +79,11 @@ $Data_String_Regex__search = ->(just) { ->(nothing) { ->(r) { ->(s) {
 } } } }
 
 $Data_String_Regex_split = ->(r) { ->(s) {
-  s.split(r["regexp"], -1)
+  if s == ""
+    r["source"] == "" ? [] : [""]
+  elsif r["source"] == ""
+    s.chars
+  else
+    s.split(r["regexp"], -1)
+  end
 } }

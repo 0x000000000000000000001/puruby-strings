@@ -37,6 +37,8 @@ $Data_String_CodeUnits__lastIndexOf = ->(just) { ->(nothing) { ->(x) { ->(s) {
 } } } }
 
 $Data_String_CodeUnits__lastIndexOfStartingAt = ->(just) { ->(nothing) { ->(x) { ->(startAt) { ->(s) {
+  startAt = 0 if startAt < 0
+  startAt = s.length if startAt > s.length
   i = s.rindex(x, startAt)
   i.nil? ? nothing : just.call(i)
 } } } } }
@@ -50,8 +52,8 @@ $Data_String_CodeUnits_drop = ->(n) { ->(s) {
 } }
 
 $Data_String_CodeUnits_slice = ->(b) { ->(e) { ->(s) {
-  b = [b, 0].max
-  e = [e, s.length].min
+  b = b < 0 ? [b + s.length, 0].max : [b, s.length].min
+  e = e < 0 ? [e + s.length, 0].max : [e, s.length].min
   (b >= e) ? "" : s[b...e].to_s
 } } }
 

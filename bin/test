@@ -18,11 +18,8 @@ fi
 # Remove cache for safety
 rm -rf output
 
-# If spago.rb.yaml or spago.ruby.yaml exists, use it
-if [ -f "spago.ruby.yaml" ]; then
-  rm -f spago.yaml
-  ln -s spago.ruby.yaml spago.yaml
-elif [ -f "spago.rb.yaml" ]; then
+# If spago.rb.yaml exists, use it
+if [ -f "spago.rb.yaml" ]; then
   rm -f spago.yaml
   ln -s spago.rb.yaml spago.yaml
 fi
